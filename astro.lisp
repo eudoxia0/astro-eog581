@@ -100,6 +100,23 @@
   (print-unreadable-object (angle stream :type t)
     (humanize angle stream)))
 
+(defun sign (x)
+  (cond ((< x 0.0)
+         -1)
+        ((= x 0.0)
+         0)
+        (t
+         1.0)))
+
+(defun dms-to-decimal (dms)
+  "Convert a DMS (degrees-minutes-seconds) angle to decimal degrees."
+  (with-slots (degrees minutes seconds) dms
+    (let ((d (* (sign degrees)
+                (+ (abs degrees)
+                   (/ minutes 60.0)
+                   (/ seconds 3600.0)))))
+      (make-instance 'decimal-degrees :value d))))
+
 ;;;; Distances
 
 (defclass light-years ()
