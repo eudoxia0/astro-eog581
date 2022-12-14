@@ -57,6 +57,22 @@
                  (> (value (star-distance star)) 22.0))
              (copy-seq (database-stars +db+))))
 
-(format t "There are ~A stars within ~,1fly of the Sun.~%"
+(format t "There are ~A stars within ~,1fly of the Sun.~%~%"
         (length +stars+)
         (value (parsecs-to-light-years (make-instance 'parsecs :value 22.0))))
+
+;;; Interstellar communications lasers have a range of 5pc (~16ly). This number
+;;; is completely arbitrary and probably too high.
+
+(defparameter +laser-limit+
+  (make-instance 'parsecs :value 5.0))
+
+;;; Now we construct a graph where the stars are nodes, every pair of stars is
+;;; connected by an edge if they are within communications laser distance.
+
+(defparameter +graph+
+  (make-graph +stars+ +laser-limit+))
+
+(format t "Star graph has ~A vertices and ~A edges.~%"
+        (length (graph-vertices +graph+))
+        (length (graph-edges +graph+)))
