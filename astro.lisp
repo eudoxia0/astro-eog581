@@ -407,3 +407,30 @@ returns NIL."
     (when (= id (star-id star))
       (return-from find-star-by-id star)))
   nil)
+
+;;;; Distance
+
+(defun euclidean-distance (p1 p2)
+  "Calculate the Euclidean distance between two Cartesian coordinates."
+  (with-slots ((x1 x) (y1 y) (z1 z)) p1
+    (with-slots ((x2 x) (y2 y) (z2 z)) p2
+      (let ((x1 (value x1))
+            (y1 (value y1))
+            (z1 (value z1))
+            (x2 (value x2))
+            (y2 (value y2))
+            (z2 (value z2)))
+        (make-instance 'parsecs
+                       :value (sqrt (+ (expt (- x1 x2) 2)
+                                       (expt (- y1 y2) 2)
+                                       (expt (- z1 z2) 2))))))))
+
+(defun distance-stars (a b)
+  (euclidean-distance (star-cartesian-position a) (star-cartesian-position b)))
+
+(defun distance-from-sol (star)
+  (euclidean-distance (make-instance 'cartesian-position
+                                     :x (make-instance 'parsecs :value 0.0)
+                                     :y (make-instance 'parsecs :value 0.0)
+                                     :z (make-instance 'parsecs :value 0.0))
+                      (star-cartesian-position star)))
