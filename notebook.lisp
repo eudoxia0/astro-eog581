@@ -6,7 +6,7 @@
 ;;; Load the HYG database.
 
 (defparameter +db+
-  (load-hyg-database #p"/home/eudoxia/common-lisp/astro-eog581/hygdata_v3.csv"))
+  (load-hyg-database #p"hygdata_v3.csv"))
 
 (assert (= (star-count +db+) 119614))
 
@@ -40,7 +40,7 @@
                 (value (parsecs-to-light-years (dist star)))
                 (star-name star)))
       (let ((star (elt sorted 1)))
-        (format t "~%~%The star closest to Gliese 581 is ~A at ~0,3fly"
+        (format t "~%~%The star closest to Gliese 581 is ~A at ~0,3fgly"
                 (star-name star)
                 (value (parsecs-to-light-years (dist star))))))))
 
