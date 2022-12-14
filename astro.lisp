@@ -323,7 +323,6 @@ returns NIL."
                    :bayer (string-or-nil bayer)
                    :distance (make-instance 'parsecs :value (parse-number:parse-real-number dist))
                    :cartesian-position (make-instance 'cartesian-position
-                                                      ;; FIXME: parse-number
                                                       :x (make-instance 'parsecs :value (parse-number:parse-real-number x))
                                                       :y (make-instance 'parsecs :value (parse-number:parse-real-number y))
                                                       :z (make-instance 'parsecs :value (parse-number:parse-real-number z))))))
