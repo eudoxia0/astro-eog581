@@ -1,3 +1,6 @@
+;;;;
+;;;; A tiny framework for astronomy in Common Lisp.
+;;;;
 (require 'uiop)
 
 ;;;; Printing
