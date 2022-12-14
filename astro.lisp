@@ -393,3 +393,17 @@ returns NIL."
                  (let ((star (parse-star columns)))
                    (vector-push-extend star stars))))
       (make-instance 'hyg-database :stars stars))))
+
+;;; Finding stars
+
+(defun find-star-by-name (db name)
+  (loop for star across (database-stars db) do
+    (when (string= name (star-name star))
+      (return-from find-star-by-name star)))
+  nil)
+
+(defun find-star-by-id (db id)
+  (loop for star across (database-stars db) do
+    (when (= id (star-id star))
+      (return-from find-star-by-id star)))
+  nil)
