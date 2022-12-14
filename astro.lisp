@@ -437,3 +437,16 @@ returns NIL."
                                      :y (make-instance 'parsecs :value 0.0)
                                      :z (make-instance 'parsecs :value 0.0))
                       (star-cartesian-position star)))
+
+(declaim (ftype (function (hyg-database cartesian-position parsecs) (vector star)) find-stars-within-radius))
+(defun find-stars-within-radius (db pos radius)
+  "Given an HYG database, a position in Cartesian coordinates, and a radius in
+parsecs, return a vector of all the stars that are within the radius from that
+position."
+  (let ((stars (make-array 0 :adjustable t :element-type 'star :fill-pointer 0)))
+    (loop for star across (database-stars db) do
+      (let ((star-pos (star-cartesian-position star)))
+        (when (< (value (euclidean-distance pos star-pos))
+                 (value radius))
+          (vector-push-extend star stars))))
+    stars))
