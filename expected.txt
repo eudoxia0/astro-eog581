@@ -19,3 +19,5 @@ The star closest to Gliese 581 is Gl 555 at 4.250gly
 There are 2333 stars within 71.8ly of the Sun.
 
 Star graph has 2333 vertices and 32266 edges.
+
+Network route has 6 jumps.

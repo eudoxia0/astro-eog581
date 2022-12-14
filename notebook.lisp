@@ -73,6 +73,12 @@
 (defparameter +graph+
   (make-graph +stars+ +laser-limit+))
 
-(format t "Star graph has ~A vertices and ~A edges.~%"
+(format t "Star graph has ~A vertices and ~A edges.~%~%"
         (length (graph-vertices +graph+))
         (length (graph-edges +graph+)))
+
+(defparameter +path+
+  (loop for id across (dijkstra +graph+ (star-id +bpic+) (star-id +g581+))
+        collecting (find id (database-stars +db+) :key #'star-id)))
+
+(format t "Network route has ~A jumps.~%" (- (length +path+) 2))
