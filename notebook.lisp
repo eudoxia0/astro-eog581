@@ -52,7 +52,11 @@
 ;;; the HYG database, and we only care about the ones within roughly ~70ly
 ;;; (~22pc) of the Sun, since that's how far Beta Pictoris is.
 
-(defparameter +stars-within-20pc+
+(defparameter +stars+
   (remove-if #'(lambda (star)
                  (> (star-distance star) 22.0))
              (copy-seq (database-stars +db+))))
+
+(format t "There are ~A stars within ~,1fly of the Sun.~%"
+        (length +stars+)
+        (value (parsecs-to-light-years (make-instance 'parsecs :value 22.0))))
