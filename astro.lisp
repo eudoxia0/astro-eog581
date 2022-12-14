@@ -358,7 +358,7 @@ returns NIL."
 ;;;; Distance
 
 (defun euclidean-distance (p1 p2)
-  "Calculate the Euclidean distance between two Cartesian coordinates."
+  "Calculate the Euclidean distance between two Cartesian coordinates. Returns a value in parsecs."
   (with-slots ((x1 x) (y1 y) (z1 z)) p1
     (with-slots ((x2 x) (y2 y) (z2 z)) p2
       (let ((x1 (value x1))
@@ -372,7 +372,8 @@ returns NIL."
                                        (expt (- y1 y2) 2)
                                        (expt (- z1 z2) 2))))))))
 
-(defun distance-stars (a b)
+(defun star-euclidean-distance (a b)
+  "The Euclidean distance between two stars in parsecs."
   (euclidean-distance (star-cartesian-position a) (star-cartesian-position b)))
 
 (defun distance-from-sol (star)
