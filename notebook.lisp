@@ -54,7 +54,7 @@
 
 (defparameter +stars+
   (remove-if #'(lambda (star)
-                 (> (star-distance star) 22.0))
+                 (> (value (star-distance star)) 22.0))
              (copy-seq (database-stars +db+))))
 
 (format t "There are ~A stars within ~,1fly of the Sun.~%"

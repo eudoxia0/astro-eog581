@@ -268,7 +268,8 @@
           :documentation "The star's Bayer / Flamsteed designation, if known.")
    (distance :reader star-distance
              :initarg :distance
-             :type number)
+             :type parsecs
+             :documentation "The star's distance from the Sun in parsecs.")
    (equatorial-position :reader star-equatorial-position
                         :initarg :equatorial-position
                         :documentation "The star's equatorial (RA, DEC, DIST) position.")
@@ -320,7 +321,7 @@ returns NIL."
                    :hd (string-or-nil hd)
                    :gliese (string-or-nil gliese)
                    :bayer (string-or-nil bayer)
-                   :distance (parse-number:parse-real-number dist)
+                   :distance (make-instance 'parsecs :value (parse-number:parse-real-number dist))
                    :cartesian-position (make-instance 'cartesian-position
                                                       ;; FIXME: parse-number
                                                       :x (make-instance 'parsecs :value (parse-number:parse-real-number x))
