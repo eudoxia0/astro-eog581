@@ -190,3 +190,39 @@
 
 (let ((pc (make-instance 'parsecs :value 41.5)))
   (assert (= (value (parsecs-to-light-years pc)) 135.35474)))
+
+;;;; Star coordinates
+
+;;; Equatorial coordinates
+
+(defclass equatorial-position ()
+  ((right-ascension :reader right-ascension
+                    :initarg :right-ascension
+                    :type hms-degrees
+                    :documentation "The right ascension in HMS.")
+   (declination :reader declination
+                :initarg :declination
+                :type dms-degrees
+                :documentation "The declination in DMS.")
+   (distance :reader distance
+             :initarg :distance
+             :type parsecs
+             :documentation "The distance in parsecs."))
+  (:documentation "A position in equatorial (RA, DEC, DIST) coordinates."))
+
+(defmethod print-object ((p equatorial-position) stream)
+  (print-unreadable-object (p stream :type t)
+    (with-slots (right-ascension declination distance) p
+      (write-string "RA=" stream)
+      (humanize right-ascension stream)
+      (write-string " DEC=" stream)
+      (humanize declination stream)
+      (write-string " D=" stream)
+      (humanize distance stream))))
+
+(let ((ra (make-instance 'hms-degrees :hours 23 :minutes 2.24 :seconds 1.42))
+      (dec (make-instance 'dms-degrees :degrees -19.6 :minutes 45.7 :seconds 2.3))
+      (d (make-instance 'parsecs :value 62.1)))
+  (let ((ep (make-instance 'equatorial-position :right-ascension ra :declination dec :distance d)))
+    (assert (string= (princ-to-string ep)
+                     "#<EQUATORIAL-POSITION RA=23.0h2.2m1.4s DEC=-19.6°45.7m2.3s D=62.1pc>"))))
