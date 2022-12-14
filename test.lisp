@@ -53,7 +53,7 @@
 (let ((a (make-instance 'light-years :value 23.4)))
   (assert (string= (princ-to-string a) "#<LIGHT-YEARS 23.4ly>")))
 
-(let ((a (make-parsecs :value 41.1)))
+(let ((a (make-parsecs 41.1)))
   (assert (string= (princ-to-string a) "#<PARSECS 41.1pc>")))
 
 ;;; Conversion
@@ -61,7 +61,7 @@
 (let ((ly (make-instance 'light-years :value 3.32)))
   (assert (= (value (light-years-to-parsecs ly)) 1.0179152)))
 
-(let ((pc (make-parsecs :value 41.5)))
+(let ((pc (make-parsecs 41.5)))
   (assert (= (value (parsecs-to-light-years pc)) 135.35474)))
 
 ;;;; Star coordinates

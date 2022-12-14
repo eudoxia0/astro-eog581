@@ -381,9 +381,9 @@ returns NIL."
 
 (defun distance-from-sol (star)
   (euclidean-distance (make-instance 'cartesian-position
-                                     :x (make-parsecs :value 0.0)
-                                     :y (make-parsecs :value 0.0)
-                                     :z (make-parsecs :value 0.0))
+                                     :x (make-parsecs 0.0)
+                                     :y (make-parsecs 0.0)
+                                     :z (make-parsecs 0.0))
                       (star-cartesian-position star)))
 
 (declaim (ftype (function (hyg-database cartesian-position parsecs) (vector star)) find-stars-within-radius))
