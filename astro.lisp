@@ -136,3 +136,57 @@
                           :seconds 2.3)))
   (let ((dec (dms-to-decimal dms)))
     (assert (= (value dec) -20.362307))))
+
+;;;; Distances
+
+(defclass light-years ()
+  ((value :reader value
+          :initarg :value
+          :type real
+          :documentation "The underlying value."))
+  (:documentation "Represents distance in light years."))
+
+(defmethod humanize ((d light-years) stream)
+  (let ((d (value d)))
+    (format stream "~0,1fly" d)))
+
+(defmethod print-object ((d light-years) stream)
+  (print-unreadable-object (d stream :type t)
+    (humanize d stream)))
+
+(let ((a (make-instance 'light-years :value 23.4)))
+  (assert (string= (princ-to-string a) "#<LIGHT-YEARS 23.4ly>")))
+
+(defclass parsecs ()
+  ((value :reader value
+          :initarg :value
+          :type real
+          :documentation "The underlying value."))
+  (:documentation "Represents distance in parsecs."))
+
+(defmethod humanize ((d parsecs) stream)
+  (let ((d (value d)))
+    (format stream "~0,1fpc" d)))
+
+(defmethod print-object ((d parsecs) stream)
+  (print-unreadable-object (d stream :type t)
+    (humanize d stream)))
+
+(let ((a (make-instance 'parsecs :value 41.1)))
+  (assert (string= (princ-to-string a) "#<PARSECS 41.1pc>")))
+
+;;; Conversion
+
+(defun light-years-to-parsecs (ly)
+  "Convert the given distance in light years to parsecs."
+  (make-instance 'parsecs :value (* (value ly) 0.306601)))
+
+(let ((ly (make-instance 'light-years :value 3.32)))
+  (assert (= (value (light-years-to-parsecs ly)) 1.0179152)))
+
+(defun parsecs-to-light-years (pc)
+  "Convert the given distance in parsecs to light years."
+  (make-instance 'light-years :value (* (value pc) 3.26156)))
+
+(let ((pc (make-instance 'parsecs :value 41.5)))
+  (assert (= (value (parsecs-to-light-years pc)) 135.35474)))
