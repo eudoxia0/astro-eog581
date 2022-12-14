@@ -81,7 +81,7 @@
   (loop for id across (dijkstra +graph+ (star-id +bpic+) (star-id +g581+))
         collecting (find id (database-stars +db+) :key #'star-id)))
 
-(format t "Network route has ~A jumps.~%~%" (- (length +path+) 2))
+(format t "Network route has ~A jumps.~%~%" (1- (length +path+)))
 
 ;;; Print the network route.
 
@@ -93,7 +93,7 @@
           (star-name b)
           (value (star-euclidean-distance a b))))
 
-(format t "~%~%")
+(format t "~%")
 
 (format t "Distance from Beta Pictoris to Gliese 555: ~,2fly~%~%"
         (value (parsecs-to-light-years (star-euclidean-distance +bpic+ +g555+))))
