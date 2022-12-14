@@ -143,6 +143,10 @@
           :documentation "The underlying value."))
   (:documentation "Represents distance in parsecs."))
 
+(defun make-parsecs (value)
+  "Create an instance of PARSECS from a numeric value."
+  (make-instance 'parsecs :value value))
+
 (defmethod humanize ((d parsecs) stream)
   (let ((d (value d)))
     (format stream "~0,1fpc" d)))
@@ -155,7 +159,7 @@
 
 (defun light-years-to-parsecs (ly)
   "Convert the given distance in light years to parsecs."
-  (make-instance 'parsecs :value (* (value ly) 0.306601)))
+  (make-parsecs (* (value ly) 0.306601)))
 
 (defun parsecs-to-light-years (pc)
   "Convert the given distance in parsecs to light years."
@@ -235,9 +239,9 @@
               (y (* rvect (sinr φ)))
               (z (* ρ     (sinr θ))))
           (make-instance 'cartesian-position
-                         :x (make-instance 'parsecs :value x)
-                         :y (make-instance 'parsecs :value y)
-                         :z (make-instance 'parsecs :value z)))))))
+                         :x (make-parsecs x)
+                         :y (make-parsecs y)
+                         :z (make-parsecs z)))))))
 
 ;;;; Star data.
 
@@ -321,11 +325,11 @@ returns NIL."
                    :hd (string-or-nil hd)
                    :gliese (string-or-nil gliese)
                    :bayer (string-or-nil bayer)
-                   :distance (make-instance 'parsecs :value (parse-number:parse-real-number dist))
+                   :distance (make-parsecs (parse-number:parse-real-number dist))
                    :cartesian-position (make-instance 'cartesian-position
-                                                      :x (make-instance 'parsecs :value (parse-number:parse-real-number x))
-                                                      :y (make-instance 'parsecs :value (parse-number:parse-real-number y))
-                                                      :z (make-instance 'parsecs :value (parse-number:parse-real-number z))))))
+                                                      :x (make-parsecs (parse-number:parse-real-number x))
+                                                      :y (make-parsecs (parse-number:parse-real-number y))
+                                                      :z (make-parsecs (parse-number:parse-real-number z))))))
 
 (defun load-hyg-database (pathname)
   "Load the HYG database from a CSV file."
@@ -367,10 +371,9 @@ returns NIL."
             (x2 (value x2))
             (y2 (value y2))
             (z2 (value z2)))
-        (make-instance 'parsecs
-                       :value (sqrt (+ (expt (- x1 x2) 2)
-                                       (expt (- y1 y2) 2)
-                                       (expt (- z1 z2) 2))))))))
+        (make-parsecs (sqrt (+ (expt (- x1 x2) 2)
+                               (expt (- y1 y2) 2)
+                               (expt (- z1 z2) 2))))))))
 
 (defun star-euclidean-distance (a b)
   "The Euclidean distance between two stars in parsecs."
@@ -378,9 +381,9 @@ returns NIL."
 
 (defun distance-from-sol (star)
   (euclidean-distance (make-instance 'cartesian-position
-                                     :x (make-instance 'parsecs :value 0.0)
-                                     :y (make-instance 'parsecs :value 0.0)
-                                     :z (make-instance 'parsecs :value 0.0))
+                                     :x (make-parsecs :value 0.0)
+                                     :y (make-parsecs :value 0.0)
+                                     :z (make-parsecs :value 0.0))
                       (star-cartesian-position star)))
 
 (declaim (ftype (function (hyg-database cartesian-position parsecs) (vector star)) find-stars-within-radius))

@@ -20,7 +20,7 @@
 
 (let ((stars (find-stars-within-radius +db+
                                        (star-cartesian-position +g581+)
-                                       (make-instance 'parsecs :value 3.0))))
+                                       (make-parsecs 3.0))))
   ;; Sort stars by distance.
   (flet ((dist (star)
            ;; Distance to Gliese 581.
@@ -59,13 +59,12 @@
 
 (format t "There are ~A stars within ~,1fly of the Sun.~%~%"
         (length +stars+)
-        (value (parsecs-to-light-years (make-instance 'parsecs :value 22.0))))
+        (value (parsecs-to-light-years (make-parsecs 22.0))))
 
 ;;; Interstellar communications lasers have a range of 5pc (~16ly). This number
 ;;; is completely arbitrary and probably too high.
 
-(defparameter +laser-limit+
-  (make-instance 'parsecs :value 5.0))
+(defparameter +laser-limit+ (make-parsecs 5.0))
 
 ;;; Now we construct a graph where the stars are nodes, every pair of stars is
 ;;; connected by an edge if they are within communications laser distance.
@@ -102,4 +101,4 @@
   (loop for (a b) on +path+ by #'cdr while b do
     (incf length (value (star-euclidean-distance a b))))
   (format t "Total network route length: ~,2fly~%"
-          (value (parsecs-to-light-years (make-instance 'parsecs :value length)))))
+          (value (parsecs-to-light-years (make-parsecs length)))))
