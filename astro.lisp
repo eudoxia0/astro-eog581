@@ -257,3 +257,37 @@
                           :y (make-instance 'parsecs :value 45.6)
                           :z (make-instance 'parsecs :value 7.8))))
   (assert (string= (princ-to-string pos) "#<CARTESIAN-POSITION X=12.3pc Y=45.6pc Z=7.8pc>")))
+
+;;; Equatorial-to-cartesian conversion.
+;;; See: http://www.projectrho.com/public_html/starmaps/trigonometry.php
+
+(defun rad (x)
+  (* x 0.0174532925))
+
+(defun sinr (x) (sin (rad x)))
+(defun cosr (x) (cos (rad x)))
+
+(defun equatorial-to-cartesian (pos)
+  "Convert a position from equatorial to cartesian coordinates."
+  (with-slots (right-ascension declination distance) pos
+    (let ((φ (value (hms-to-decimal right-ascension)))
+          (θ (value (dms-to-decimal declination)))
+          (ρ (value distance)))
+      (let ((rvect (* ρ (cosr θ))))
+        (let ((x (* rvect (cosr φ)))
+              (y (* rvect (sinr φ)))
+              (z (* ρ     (sinr θ))))
+          (make-instance 'cartesian-position
+                         :x (make-instance 'parsecs :value x)
+                         :y (make-instance 'parsecs :value y)
+                         :z (make-instance 'parsecs :value z)))))))
+
+(let ((ra (make-instance 'hms-degrees :hours 1 :minutes 41 :seconds 45))
+      (dec (make-instance 'dms-degrees :degrees -16.0 :minutes 12.0 :seconds 0.0))
+      (d (make-instance 'parsecs :value 3.61)))
+  (let ((tau-ceti (make-instance 'equatorial-position :right-ascension ra :declination dec :distance d)))
+    (assert (string= (princ-to-string tau-ceti) "#<EQUATORIAL-POSITION RA=1.0h41.0m45.0s DEC=-16.0°12.0m.0s D=3.6pc>"))
+    (with-slots (x y z) (equatorial-to-cartesian tau-ceti)
+      (assert (= (value x) 3.1305823))
+      (assert (= (value y) 1.4890215))
+      (assert (= (value z) -1.0071579)))))
