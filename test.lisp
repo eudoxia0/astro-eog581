@@ -21,6 +21,9 @@
 (let ((a (make-instance 'decimal-degrees :value 49.3)))
   (assert (string= (princ-to-string a) "#<DECIMAL-DEGREES 49.3°>")))
 
+(assert-throws (make-instance 'decimal-degrees :value 200.0))
+(assert-throws (make-instance 'decimal-degrees :value -200.0))
+
 ;;; HMs
 
 (let ((a (make-instance 'hms-degrees :hours 7.2 :minutes 2.24 :seconds 1.42)))
