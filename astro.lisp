@@ -345,3 +345,15 @@ returns NIL."
 (defmethod print-object ((star star) stream)
   (print-unreadable-object (star stream :type t)
     (format stream "~A" (star-name star))))
+
+;;;; HYG database.
+
+(defclass hyg-database ()
+  ((stars :reader database-stars
+          :initarg :stars
+          :type (vector star)
+          :documentation "The star vector."))
+  (:documentation "The in-memory HYG database."))
+
+(defun star-count (db)
+  (length (database-stars db)))
