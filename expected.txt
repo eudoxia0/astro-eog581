@@ -13,8 +13,7 @@ Ten stars closest to Gliese 581:
 8.34ly   Gl 644A
 8.83ly   Gl 643
 
-
-The star closest to Gliese 581 is Gl 555 at 4.250gly
+The star closest to Gliese 581 is Gl 555 at 4.25ly
 
 There are 2333 stars within 71.8ly of the Sun.
 

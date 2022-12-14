@@ -39,7 +39,7 @@
                 (value (parsecs-to-light-years (dist star)))
                 (star-name star)))
       (let ((star (elt sorted 1)))
-        (format t "~%~%The star closest to Gliese 581 is ~A at ~0,3fgly"
+        (format t "~%The star closest to Gliese 581 is ~A at ~0,2fly"
                 (star-name star)
                 (value (parsecs-to-light-years (dist star))))))))
 
