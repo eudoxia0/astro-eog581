@@ -2,7 +2,6 @@
 ;;;; The calculations specific to the story.
 ;;;;
 
-
 ;;; Load the HYG database.
 
 (defparameter +db+
@@ -45,3 +44,15 @@
                 (value (parsecs-to-light-years (dist star))))))))
 
 (format t "~%~%")
+
+;;; Calculate the network routine from Ctesiphon (Beta Pictoris) to Wepwawet
+;;; (Gliese 555).
+;;;
+;;; To begin, we have to pare down the search space. There's over 100k stars in
+;;; the HYG database, and we only care about the ones within roughly ~70ly
+;;; (~22pc) of the Sun, since that's how far Beta Pictoris is.
+
+(defparameter +stars-within-20pc+
+  (remove-if #'(lambda (star)
+                 (> (star-distance star) 22.0))
+             (copy-seq (database-stars +db+))))
