@@ -1,0 +1,18 @@
+Ten stars closest to Gliese 581:
+
+ DIST    NAME
+---------------
+4.25ly   Gl 555
+5.15ly   Gl 570B
+5.17ly   Gl 570A
+7.43ly   NN 3877
+7.87ly   Gl 563.2A
+8.17ly   Gl 644B
+8.18ly   Gl 644C
+8.21ly   Gl 628
+8.34ly   Gl 644A
+8.83ly   Gl 643
+
+
+The star closest to Gliese 581 is Gl 555 at 4.250gly
+
