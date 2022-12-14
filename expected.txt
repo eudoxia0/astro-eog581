@@ -21,3 +21,13 @@ There are 2333 stars within 71.8ly of the Sun.
 Star graph has 2333 vertices and 32266 edges.
 
 Network route has 6 jumps.
+
+       Start          End       Dist
+------------------------------------
+     Bet Pic       Gl 238     4.32ly
+      Gl 238    HIP 27887     3.71ly
+   HIP 27887    HIP 31293     4.99ly
+   HIP 31293    HIP 31292     0.34ly
+   HIP 31292    HIP 58910     4.74ly
+   HIP 58910    Gl 563.2A     3.98ly
+   Gl 563.2A       Gl 581     2.41ly
