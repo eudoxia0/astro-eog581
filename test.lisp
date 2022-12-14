@@ -2,6 +2,18 @@
 ;;;; Tests of the astronomy framework.
 ;;;;
 
+;;;; Test Utilities
+
+(defmacro assert-throws (expr)
+  (let ((threw (gensym)))
+    `(let ((,threw nil))
+       (handler-case
+           ,expr
+         (error ()
+           (setf ,threw t)))
+       (unless ,threw
+         (error "Expression ~A did not throw." ',expr)))))
+
 ;;;; Angles
 
 ;;; Decimal
