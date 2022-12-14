@@ -357,3 +357,39 @@ returns NIL."
 
 (defun star-count (db)
   (length (database-stars db)))
+
+;;; Parsing the HYG database.
+
+(defun string-or-nil (str)
+  (if (string= str "") nil str))
+
+(defun parse-star (cells)
+  (destructuring-bind (id hip hd hr gliese bayer proper ra dec dist prma prdec rv mag absmag spect ci x y z &rest etc) cells
+    (declare (ignore hr ra dec prma prdec rv mag absmag spect ci etc))
+    (make-instance 'star
+                   :id (parse-integer id)
+                   :proper (string-or-nil proper)
+                   :hip (string-or-nil hip)
+                   :hd (string-or-nil hd)
+                   :gliese (string-or-nil gliese)
+                   :bayer (string-or-nil bayer)
+                   :distance (read-from-string dist)
+                   :cartesian-position (make-instance 'cartesian-position
+                                                      ;; FIXME: parse-number
+                                                      :x (make-instance 'parsecs :value (read-from-string x))
+                                                      :y (make-instance 'parsecs :value (read-from-string y))
+                                                      :z (make-instance 'parsecs :value (read-from-string z))))))
+
+(defun load-hyg-database (pathname)
+  "Load the HYG database from a CSV file."
+  (with-open-file (stream pathname :direction :input)
+    ;; Discard the header.
+    (read-line stream nil)
+    (let ((stars (make-array 0 :adjustable t :element-type 'star :fill-pointer 0)))
+      (loop for line = (read-line stream nil)
+            while line
+            do
+               (let ((columns (uiop:split-string line :separator ",")))
+                 (let ((star (parse-star columns)))
+                   (vector-push-extend star stars))))
+      (make-instance 'hyg-database :stars stars))))
