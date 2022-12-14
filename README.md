@@ -15,7 +15,7 @@ Zoomed in around Gliese 581:
 Network route from Ctesiphon (Beta Pictoris) to Wepwawet (Gliese 555), shortest
 path with laser links limited to 16 light years:
 
-![](route.png)
+![](images/route.png)
 
 # License
 
