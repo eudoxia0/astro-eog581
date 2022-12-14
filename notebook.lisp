@@ -45,7 +45,7 @@
 
 (format t "~%~%")
 
-;;; Calculate the network routine from Ctesiphon (Beta Pictoris) to Wepwawet
+;;; Calculate the network route from Ctesiphon (Beta Pictoris) to Wepwawet
 ;;; (Gliese 555).
 ;;;
 ;;; To begin, we have to pare down the search space. There's over 100k stars in
