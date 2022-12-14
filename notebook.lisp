@@ -92,3 +92,14 @@
           (star-name a)
           (star-name b)
           (value (star-euclidean-distance a b))))
+
+(format t "~%~%")
+
+(format t "Distance from Beta Pictoris to Gliese 555: ~,2fly~%~%"
+        (value (parsecs-to-light-years (star-euclidean-distance +bpic+ +g555+))))
+
+(let ((length 0.0))
+  (loop for (a b) on +path+ by #'cdr while b do
+    (incf length (value (star-euclidean-distance a b))))
+  (format t "Total network route length: ~,2fly~%"
+          (value (parsecs-to-light-years (make-instance 'parsecs :value length)))))
