@@ -23,13 +23,13 @@ Network route has 7 jumps.
 
        Start          End       Dist
 ------------------------------------
-     Bet Pic       Gl 238     4.32ly
-      Gl 238    HIP 27887     3.71ly
-   HIP 27887    HIP 31293     4.99ly
-   HIP 31293    HIP 31292     0.34ly
-   HIP 31292    HIP 58910     4.74ly
-   HIP 58910    Gl 563.2A     3.98ly
-   Gl 563.2A       Gl 581     2.41ly
+     Bet Pic       Gl 238    14.08ly
+      Gl 238    HIP 27887    12.11ly
+   HIP 27887    HIP 31293    16.27ly
+   HIP 31293    HIP 31292     1.10ly
+   HIP 31292    HIP 58910    15.46ly
+   HIP 58910    Gl 563.2A    12.99ly
+   Gl 563.2A       Gl 581     7.87ly
 
 Distance from Beta Pictoris to Gliese 555: 70.80ly
 

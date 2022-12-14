@@ -91,7 +91,7 @@
   (format t "~12@A ~12@A ~8,2fly~%"
           (star-name a)
           (star-name b)
-          (value (star-euclidean-distance a b))))
+          (value (parsecs-to-light-years (star-euclidean-distance a b)))))
 
 (format t "~%")
 
