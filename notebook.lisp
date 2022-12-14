@@ -31,11 +31,11 @@
                                (value (dist star-b)))))))
       ;; Print the list of stars.
       (format t "Ten stars closest to Gliese 581:~%~%")
-      (format t " DIST    NAME~%")
-      (format t "---------------~%")
+      (format t "~8@A ~12@A~%" "Dist" "Star")
+      (format t "---------------------~%")
       ; subseq because the first star is Gl581 itself, and because we only want the top 10
       (loop for star across (subseq sorted 1 11) do
-        (format t "~0,2fly   ~A~%"
+        (format t "~6,2fly ~12@A~%"
                 (value (parsecs-to-light-years (dist star)))
                 (star-name star)))
       (let ((star (elt sorted 1)))
