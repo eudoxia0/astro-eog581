@@ -226,3 +226,34 @@
   (let ((ep (make-instance 'equatorial-position :right-ascension ra :declination dec :distance d)))
     (assert (string= (princ-to-string ep)
                      "#<EQUATORIAL-POSITION RA=23.0h2.2m1.4s DEC=-19.6°45.7m2.3s D=62.1pc>"))))
+
+(defclass cartesian-position ()
+  ((x :reader x
+      :initarg :x
+      :type parsecs
+      :documentation "The X coordinate in parsecs.")
+   (y :reader y
+      :initarg :y
+      :type parsecs
+      :documentation "The Y coordinate in parsecs.")
+   (z :reader z
+      :initarg :z
+      :type parsecs
+      :documentation "The Z coordinate in parsecs."))
+  (:documentation "A position in Cartesian (X, Y, Z) coordinates."))
+
+(defmethod print-object ((p cartesian-position) stream)
+  (print-unreadable-object (p stream :type t)
+    (with-slots (x y z) p
+      (write-string "X=" stream)
+      (humanize x stream)
+      (write-string " Y=" stream)
+      (humanize y stream)
+      (write-string " Z=" stream)
+      (humanize z stream))))
+
+(let ((pos (make-instance 'cartesian-position
+                          :x (make-instance 'parsecs :value 12.3)
+                          :y (make-instance 'parsecs :value 45.6)
+                          :z (make-instance 'parsecs :value 7.8))))
+  (assert (string= (princ-to-string pos) "#<CARTESIAN-POSITION X=12.3pc Y=45.6pc Z=7.8pc>")))
