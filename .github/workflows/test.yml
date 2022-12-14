@@ -1,0 +1,23 @@
+name: Test
+on:
+  - push
+jobs:
+  build:
+    strategy:
+      fail-fast: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install SBCL
+        run: sudo apt-get update && sudo apt-get install sbcl
+
+      - name: Download Quicklisp
+        run: curl -O https://beta.quicklisp.org/quicklisp.lisp
+
+      - name: Install Quicklisp
+        run: sbcl  --noinform --non-interactive --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql-util:without-prompting (ql:add-to-init-file))' --quit
+
+      - name: Let ASDF find the project
+        run: mkdir ~/common-lisp; ln -s `pwd` ~/common-lisp/astro-eog581
