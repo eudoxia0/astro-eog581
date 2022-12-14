@@ -29,4 +29,8 @@ jobs:
         run: sbcl --noinform --non-interactive --load astro.lisp --load test.lisp --quit
 
       - name: Run notebook
-        run: sbcl --noinform --non-interactive --load astro.lisp --load test.lisp --load notebook.lisp --quit
+        run: sbcl --noinform --non-interactive --load astro.lisp --load test.lisp --load notebook.lisp --quit > output.txt
+
+      - name: Verify output is what we expect.
+        # Note that `diff` exits with code `1` when the files are different.
+        run: diff -q expected.txt output.txt
