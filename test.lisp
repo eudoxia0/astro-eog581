@@ -95,3 +95,18 @@
       (assert (= (value x) 3.1305823))
       (assert (= (value y) 1.4890215))
       (assert (= (value z) -1.0071579)))))
+
+;;;; Dijkstra's algorithm
+
+(flet ((mk-edge (a b c)
+         (make-instance 'edge
+                        :start a
+                        :end b
+                        :cost c)))
+  (let ((graph (make-graph-from-edges
+                (vector (mk-edge 1 2 1.0)
+                        (mk-edge 1 3 2.0)
+                        (mk-edge 2 4 1.0)
+                        (mk-edge 3 4 1.0)))))
+    (let ((path (dijkstra graph 1 4)))
+      (assert (equalp path #(1 2 4))))))
