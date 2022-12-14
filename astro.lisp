@@ -291,3 +291,57 @@
       (assert (= (value x) 3.1305823))
       (assert (= (value y) 1.4890215))
       (assert (= (value z) -1.0071579)))))
+
+;;;; Star data.
+
+(defclass star ()
+  ((id :reader star-id
+       :initarg :id
+       :type integer
+       :documentation "The star's ID in the HYG database.")
+   (proper :reader star-proper
+           :initarg :proper
+           :type (or null string)
+           :documentation "The star's proper name, if known.")
+   (hip :reader star-hip
+        :initarg :hip
+        :type (or null string)
+        :documentation "The star's name in the Hipparcos catalog, if known.")
+   (hd :reader star-hd
+       :initarg :hd
+       :type (or null string)
+       :documentation "The star's name in the Henry Draper catalog, if known.")
+   (gliese :reader star-gliese
+        :initarg :gliese
+        :type (or null string)
+           :documentation "The star's name in the the third edition of the Gliese Catalog of Nearby Stars, if known.")
+   (bayer :reader star-bayer
+          :initarg :bayer
+          :type (or null string)
+          :documentation "The star's Bayer / Flamsteed designation, if known.")
+   (distance :reader star-distance
+             :initarg :distance
+             :type number)
+   (equatorial-position :reader star-equatorial-position
+                        :initarg :equatorial-position
+                        :documentation "The star's equatorial (RA, DEC, DIST) position.")
+   (cartesian-position :reader star-cartesian-position
+                       :initarg :cartesian-position
+                       :documentation "The star's Cartesian (X, Y, Z) position."))
+  (:documentation "Represents a star from the HYG database."))
+
+(defun star-name (star)
+  "A star's name. The following are tried in order: proper name, Bayer
+designation, Gliese name, HIP name, HD name. If the star doesn't have any names,
+returns NIL."
+  (with-slots (proper bayer gliese hip) star
+    (or proper
+        bayer
+        gliese
+        (if hip
+            (concatenate 'string "HIP " hip)
+            "?"))))
+
+(defmethod print-object ((star star) stream)
+  (print-unreadable-object (star stream :type t)
+    (format stream "~A" (star-name star))))
