@@ -2,6 +2,8 @@
 ;;;; A tiny framework for astronomy in Common Lisp.
 ;;;;
 (require 'uiop)
+(require 'asdf)
+(asdf:load-system :parse-number)
 
 ;;;; Printing
 
@@ -318,12 +320,12 @@ returns NIL."
                    :hd (string-or-nil hd)
                    :gliese (string-or-nil gliese)
                    :bayer (string-or-nil bayer)
-                   :distance (read-from-string dist)
+                   :distance (parse-number:parse-real-number dist)
                    :cartesian-position (make-instance 'cartesian-position
                                                       ;; FIXME: parse-number
-                                                      :x (make-instance 'parsecs :value (read-from-string x))
-                                                      :y (make-instance 'parsecs :value (read-from-string y))
-                                                      :z (make-instance 'parsecs :value (read-from-string z))))))
+                                                      :x (make-instance 'parsecs :value (parse-number:parse-real-number x))
+                                                      :y (make-instance 'parsecs :value (parse-number:parse-real-number y))
+                                                      :z (make-instance 'parsecs :value (parse-number:parse-real-number z))))))
 
 (defun load-hyg-database (pathname)
   "Load the HYG database from a CSV file."
