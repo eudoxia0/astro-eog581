@@ -102,3 +102,45 @@
     (incf length (value (star-euclidean-distance a b))))
   (format t "Total network route length: ~,2fly~%"
           (value (parsecs-to-light-years (make-parsecs length)))))
+
+;;;; Plotting.
+
+(defun write-stars-to-csv (path stars)
+  (with-open-file (stream path
+                          :direction :output
+                          :if-does-not-exist :create
+                          :if-exists :supersede)
+    (loop for (star . name) in stars do
+      (let ((pos (star-cartesian-position star)))
+        (with-slots (x y z) pos
+          (format stream "~,2f,~,2f,~,2f,~A~%"
+                  (value x)
+                  (value y)
+                  (value z)
+                  name))))))
+
+;;; Write the coordinates and names of all the place names in the story to a
+;;; CSV.
+
+(defparameter +g570+
+  ;; Ararat, Gliese 570
+  (find-star-by-name +db+ "Gl 570A"))
+
+(defparameter +all-stars+
+  (list (cons +sol+ "Sol")
+        (cons +bpic+ "Ctesiphon")
+        (cons +g581+ "Gliese 581")
+        (cons +g555+ "Wepwawet")
+        (cons (find-star-by-name +db+ "HIP 25283") "Tigranes") ;; HD 35650
+        (cons +g570+ "Ararat")))
+
+(write-stars-to-csv #p"all-stars.csv" +all-stars+)
+
+;;; Write the coordinates and names of the environs of Gliese 581 to a CSV.
+
+(defparameter +all-stars+
+  (list (cons +g581+ "Gliese 581")
+        (cons +g555+ "Wepwawet")
+        (cons +g570+ "Ararat")))
+
+(write-stars-to-csv #p"g581-environs.csv" +all-stars+)
