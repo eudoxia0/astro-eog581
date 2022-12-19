@@ -41,24 +41,6 @@
           :documentation "A vector of edge objects."))
   (:documentation "Represents a graph."))
 
-(defun make-neighbors (graph)
-  "Construct the neighbors map. This is a hash table from vertex IDs to a hash
-  table of vertex IDs to costs. That is:
-
-Map[ID, Map[ID, Float]]"
-  (with-slots (vertices edges) graph
-    (let ((neighbors (make-hash-table :test 'equal)))
-      ;; Initialize.
-      (loop for vertex across vertices do
-        (setf (gethash vertex neighbors) (make-hash-table :test 'equal)))
-      ;; Fill.
-      (loop for edge across edges do
-        (with-slots (start end cost) edge
-          (setf (gethash end (gethash start neighbors)) cost)
-          (setf (gethash start (gethash end neighbors)) cost)))
-      ;; Return
-      neighbors)))
-
 ;(declaim (ftype (function ((vector edge)) graph) make-graph-from-edges))
 (defun make-graph-from-edges (edges)
   "Construct a graph from a vector of edges."
@@ -98,6 +80,33 @@ Map[ID, Map[ID, Float]]"
                                   edges))))))
     ;; Construct the graph from the edges.
     (make-graph-from-edges edges)))
+
+(defun build-path (destination previous)
+  (let ((path (make-array 0 :adjustable t :element-type 'integer :fill-pointer 0)))
+    (let ((u destination))
+      (loop while (gethash u previous) do
+        (vector-push-extend u path)
+        (setf u (gethash u previous)))
+      (vector-push-extend u path)
+      (reverse path))))
+
+(defun make-neighbors (graph)
+  "Construct the neighbors map. This is a hash table from vertex IDs to a hash
+  table of vertex IDs to costs. That is:
+
+Map[ID, Map[ID, Float]]"
+  (with-slots (vertices edges) graph
+    (let ((neighbors (make-hash-table :test 'equal)))
+      ;; Initialize.
+      (loop for vertex across vertices do
+        (setf (gethash vertex neighbors) (make-hash-table :test 'equal)))
+      ;; Fill.
+      (loop for edge across edges do
+        (with-slots (start end cost) edge
+          (setf (gethash end (gethash start neighbors)) cost)
+          (setf (gethash start (gethash end neighbors)) cost)))
+      ;; Return
+      neighbors)))
 
 (defun dijkstra (graph source destination)
   "Find a path from the source node to the destination in the given graph.
@@ -146,10 +155,4 @@ Returns a vector of integer vertex IDs."
                           (setf (gethash v dist) alt)
                           (setf (gethash v previous) u))))))))
             ;; Build path
-            (let ((path (make-array 0 :adjustable t :element-type 'integer :fill-pointer 0)))
-              (let ((u destination))
-                (loop while (gethash u previous) do
-                  (vector-push-extend u path)
-                  (setf u (gethash u previous)))
-                (vector-push-extend u path)
-                (reverse path)))))))))
+            (build-path destination previous)))))))
