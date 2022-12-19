@@ -63,5 +63,5 @@ def plot_stars(input_path, output_path, route=False):
     plt.savefig(output_path, transparent=True, bbox_inches='tight')
 
 plot_stars("all-stars.csv", "all-stars.png")
-plot_stars("g581-environs.csv", "g851-environs.png")
+plot_stars("g581-environs.csv", "g581-environs.png")
 plot_stars("route.csv", "route.png", route=True)
