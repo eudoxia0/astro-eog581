@@ -41,7 +41,6 @@
           :documentation "A vector of edge objects."))
   (:documentation "Represents a graph."))
 
-;(declaim (ftype (function ((vector edge)) graph) make-graph-from-edges))
 (defun make-graph-from-edges (edges)
   "Construct a graph from a vector of edges."
   (let ((vertex-table (make-hash-table :test 'equal)) ; table of seen IDs
@@ -57,7 +56,6 @@
     (make-instance 'graph :vertices vertices
                           :edges edges)))
 
-;(declaim (ftype (function ((vector star) parsecs) graph) make-graph))
 (defun make-graph (stars dist)
   "Create a graph from a vector of stars. Only create edges between stars that are less than DIST parsecs apart."
   (let ((n (length stars)) ; Number of stars.
