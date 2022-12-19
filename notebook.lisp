@@ -77,7 +77,7 @@
         (length (graph-edges +graph+)))
 
 (defparameter +path+
-  (loop for id across (dijkstra +graph+ (star-id +bpic+) (star-id +g581+))
+  (loop for id across (dijkstra +graph+ (star-id +bpic+) (star-id +g555+))
         collecting (find id (database-stars +db+) :key #'star-id)))
 
 (format t "Network route has ~A jumps.~%~%" (1- (length +path+)))
@@ -144,3 +144,12 @@
         (cons +g570+ "Ararat")))
 
 (write-stars-to-csv #p"g581-environs.csv" +all-stars+)
+
+;;; Write the coordinates of the network route to a CSV.
+
+(write-stars-to-csv #p"route.csv"
+                    (loop for (star b)
+                          on +path+
+                          by #'cdr
+                          while star
+                          collecting (cons star (star-name star))))
