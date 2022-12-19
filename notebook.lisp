@@ -152,4 +152,12 @@
                           on +path+
                           by #'cdr
                           while star
-                          collecting (cons star (star-name star))))
+                          collecting
+                          (let ((name (star-name star)))
+                            (cons star
+                                  (cond ((string= name "Bet Pic")
+                                         "Ctesiphon")
+                                        ((string= name "Gl 555")
+                                         "Wepwawet")
+                                        (t
+                                         name))))))
