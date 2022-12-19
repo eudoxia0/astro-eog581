@@ -2,8 +2,9 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
 
-def plot_stars(input_path, output_path, route=False):
+def plot_stars(input_path, output_name, route=False):
     # Data.
     x = []
     y = []
@@ -21,31 +22,30 @@ def plot_stars(input_path, output_path, route=False):
             labels.append(label)
 
     # Create a figure and a 3D Axes.
-    fig = plt.figure(figsize=(6,2), dpi=600)
+    dpi = 600
+    fig = plt.figure(figsize=(2,2), dpi=dpi)
     ax = fig.add_subplot(111, projection='3d')
 
     # Create the scatterplot.
-    ax.scatter(x, y, z, c='b', marker='.', s=1, alpha=0.5)
+    scatter = ax.scatter(x, y, z, c='b', marker='.', s=1, alpha=0.5)
 
     # Add labels to each star.
-    for i, label in enumerate(labels):
-        ax.text(x[i], y[i], z[i] + 0.1, label, fontsize=2)
+    text = [ax.text(x[i], y[i], z[i] + 0.1, label, fontsize=2) for i, label in enumerate(labels)]
 
     # Draw the impulses.
-    for i in range(len(x)):
-        ax.plot([x[i], x[i]], [y[i], y[i]], [0, z[i]], ':', c='k', linewidth=0.2)
+    impulses = [ax.plot([x[i], x[i]], [y[i], y[i]], [0, z[i]], ':', c='k', linewidth=0.2) for i in range(len(x))]
 
     # Are we plotting a route? If so, draw the lines between the stars:
     if route:
-        for i, label in enumerate(labels):
-            if i < len(labels) - 1:
-                ax.plot(
-                    [x[i], x[i+1]],
-                    [y[i], y[i+1]],
-                    [z[i], z[i+1]],
-                    color='r',
-                    linewidth=0.1
-                )
+        lines = [ax.plot(
+            [x[i], x[i+1]],
+            [y[i], y[i+1]],
+            [z[i], z[i+1]],
+            color='r',
+            linewidth=0.1
+        ) for i in range(len(labels)-1)]
+    else:
+        lines = []
 
     # Plot the origin plane.
     GAP = 1
@@ -54,14 +54,25 @@ def plot_stars(input_path, output_path, route=False):
         np.linspace(min(y) - GAP, max(y) + GAP, 10)
     )
     Z = np.zeros_like(X)
-    ax.plot_wireframe(X, Y, Z, rstride=1, cstride=1, linewidths=0.1)
+    origin_plane = ax.plot_wireframe(X, Y, Z, rstride=1, cstride=1, linewidths=0.1)
 
     # Hide the axes and grid planes.
     plt.axis("off")
 
-    # Write the plot
-    plt.savefig(output_path, transparent=True, bbox_inches='tight')
+    # Define the animation function.
+    def animate(i):
+        ax.view_init(elev=30, azim=i)
 
-plot_stars("all-stars.csv", "all-stars.png")
-plot_stars("g581-environs.csv", "g581-environs.png")
-plot_stars("route.csv", "route.png", route=True)
+    plt.savefig(output_name + ".png", transparent=True, bbox_inches='tight')
+
+    # Create the animation object.
+    anim = animation.FuncAnimation(fig, animate, frames=360, interval=20, blit=False)
+
+    # Save the animation as an MP4 file.
+    anim.save(output_name + ".mp4", fps=30, extra_args=['-vcodec', 'libx264'], dpi=dpi)
+
+    print(f"Saved {output_name}")
+
+plot_stars("all-stars.csv", "all-stars")
+plot_stars("g581-environs.csv", "g581-environs")
+plot_stars("route.csv", "route", route=True)
