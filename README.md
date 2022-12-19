@@ -14,7 +14,7 @@ Files:
 
 All place names:
 
-<video src="https://github.com/eudoxia0/astro-eog581/blob/master/all-stars.mp4" width="200" />
+https://github.com/eudoxia0/astro-eog581/blob/master/all-stars.mp4
 
 Zoomed in around Gliese 581:
 
