@@ -5,11 +5,10 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
 def plot_stars(input_path, output_name, route=False):
-    # Data.
-    x = []
-    y = []
-    z = []
-    labels = []
+    x: list[float]    = []
+    y: list[float]    = []
+    z: list[float]    = []
+    labels: list[str] = []
 
     # Parse the CSV.
     with open(input_path, newline='') as stream:
