@@ -14,16 +14,16 @@ Files:
 
 All place names:
 
-![](images/place-names.png)
+![](all-stars.png)
 
 Zoomed in around Gliese 581:
 
-![](images/gliese-581-environs.png)
+![](g581-environs.png)
 
 Network route from Ctesiphon (Beta Pictoris) to Wepwawet (Gliese 555), shortest
 path with laser links limited to 16 light years:
 
-![](images/route.png)
+![](route.png)
 
 # License
 
