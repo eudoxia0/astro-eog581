@@ -315,6 +315,9 @@ returns NIL."
 (defun string-or-nil (str)
   (if (string= str "") nil str))
 
+(defun parse-parsecs (str)
+  (make-parsecs (parse-number:parse-real-number str)))
+
 (defun parse-star (cells)
   (destructuring-bind (id hip hd hr gliese bayer proper ra dec dist prma prdec rv mag absmag spect ci x y z &rest etc) cells
     (declare (ignore hr ra dec prma prdec rv mag absmag spect ci etc))
@@ -327,9 +330,9 @@ returns NIL."
                    :bayer (string-or-nil bayer)
                    :distance (make-parsecs (parse-number:parse-real-number dist))
                    :cartesian-position (make-instance 'cartesian-position
-                                                      :x (make-parsecs (parse-number:parse-real-number x))
-                                                      :y (make-parsecs (parse-number:parse-real-number y))
-                                                      :z (make-parsecs (parse-number:parse-real-number z))))))
+                                                      :x (parse-parsecs x)
+                                                      :y (parse-parsecs y)
+                                                      :z (parse-parsecs z)))))
 
 (defun load-hyg-database (pathname)
   "Load the HYG database from a CSV file."
