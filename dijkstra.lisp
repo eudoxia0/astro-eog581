@@ -108,6 +108,20 @@ Map[ID, Map[ID, Float]]"
       ;; Return
       neighbors)))
 
+(defun pop-min (queue dist)
+  "The worst priority queue implementation ever written."
+  (let ((min-id nil)
+        (min-dist nil))
+    (loop for vertex being the hash-keys of queue do
+      (when (or (null min-id)
+                (< (gethash vertex dist) min-dist))
+        (setf min-id vertex)
+        (setf min-dist (gethash vertex dist))))
+    (assert (not (null min-id)))
+    (assert (not (null min-dist)))
+    (remhash min-id queue)
+    min-id))
+
 (defun dijkstra (graph source destination)
   "Find a path from the source node to the destination in the given graph.
 
@@ -129,30 +143,18 @@ Returns a vector of integer vertex IDs."
         (let ((q (make-hash-table :test 'equal)))
           (loop for vertex across (graph-vertices graph) do
             (setf (gethash vertex q) t))
-          (labels ((pop-min ()
-                     (let ((min-id nil)
-                           (min-dist nil))
-                       (loop for vertex being the hash-keys of q do
-                         (when (or (null min-id)
-                                   (< (gethash vertex dist) min-dist))
-                           (setf min-id vertex)
-                           (setf min-dist (gethash vertex dist))))
-                       (assert (not (null min-id)))
-                       (assert (not (null min-dist)))
-                       (remhash min-id q)
-                       min-id)))
-            (loop while (> (hash-table-count q) 0) do
-              (let ((u (pop-min)))
-                (when (or (= u destination)
-                          (= (gethash u dist) double-float-positive-infinity))
-                  (return))
-                ;; Adjust neighbor distances.
-                (let ((neighbors (gethash u neighbors)))
-                  (loop for v being the hash-keys of neighbors do
-                    (let ((cost (gethash v neighbors)))
-                      (let ((alt (+ cost (gethash u dist))))
-                        (when (< alt (gethash v dist))
-                          (setf (gethash v dist) alt)
-                          (setf (gethash v previous) u))))))))
-            ;; Build path
-            (build-path destination previous)))))))
+          (loop while (> (hash-table-count q) 0) do
+            (let ((u (pop-min q dist)))
+              (when (or (= u destination)
+                        (= (gethash u dist) double-float-positive-infinity))
+                (return))
+              ;; Adjust neighbor distances.
+              (let ((neighbors (gethash u neighbors)))
+                (loop for v being the hash-keys of neighbors do
+                  (let ((cost (gethash v neighbors)))
+                    (let ((alt (+ cost (gethash u dist))))
+                      (when (< alt (gethash v dist))
+                        (setf (gethash v dist) alt)
+                        (setf (gethash v previous) u))))))))
+          ;; Build path
+          (build-path destination previous))))))
