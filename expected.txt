@@ -29,8 +29,8 @@ Network route has 7 jumps.
    HIP 31293    HIP 31292     1.10ly
    HIP 31292    HIP 58910    15.46ly
    HIP 58910    Gl 563.2A    12.99ly
-   Gl 563.2A       Gl 581     7.87ly
+   Gl 563.2A       Gl 555     6.24ly
 
 Distance from Beta Pictoris to Gliese 555: 70.80ly
 
-Total network route length: 79.88ly
+Total network route length: 78.25ly
