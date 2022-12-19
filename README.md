@@ -14,16 +14,17 @@ Files:
 
 All place names:
 
-https://github.com/eudoxia0/astro-eog581/blob/master/all-stars.mp4
+https://user-images.githubusercontent.com/1612511/208328913-f5c99342-7fba-4d09-bdb7-f7526bcb77c8.mp4
 
 Zoomed in around Gliese 581:
 
-![](g581-environs.png)
+https://user-images.githubusercontent.com/1612511/208328944-ecc36908-0fe3-4665-a4ac-11b867519ec0.mp4
+
 
 Network route from Ctesiphon (Beta Pictoris) to Wepwawet (Gliese 555), shortest
 path with laser links limited to 16 light years:
 
-![](route.png)
+https://user-images.githubusercontent.com/1612511/208328957-2f649681-8782-466e-9de7-b012969503d4.mp4
 
 # License
 
