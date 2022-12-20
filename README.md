@@ -2,6 +2,10 @@ Astronomical calculations for [_The Epiphany of Gliese 581_][eog581].
 
 [eog581]: https://borretti.me/fiction/eog581
 
+See the blog post here: [Astronomical Calculations for Hard SF in Common Lisp][astro].
+
+[astro]: https://borretti.me/article/astronomical-calculations-for-hard-sf-common-lisp
+
 Files:
 
 - `astro.lisp`: the core astronomy framework, CLOS classes to represent
